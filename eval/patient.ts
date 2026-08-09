@@ -25,6 +25,14 @@ export async function simulatePatient(
       `When your goal is achieved OR it's clearly not going to happen, reply with exactly ${END} and nothing else.`,
   };
 
-  const msg = await chat([system, ...flipped], undefined, { temperature: 0.7 });
+  // On the opener there are no agent turns yet. Some providers (Gemini's
+  // OpenAI-compat layer) reject a system-only request with no user content, so
+  // seed an explicit cue for the patient's first line.
+  const convo: ChatMessage[] =
+    flipped.length === 0
+      ? [{ role: "user", content: "[The receptionist has just answered the phone. Say your opening line.]" }]
+      : flipped;
+
+  const msg = await chat([system, ...convo], undefined, { temperature: 0.7 });
   return (msg.content ?? "").trim();
 }

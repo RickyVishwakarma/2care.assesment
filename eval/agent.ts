@@ -50,7 +50,13 @@ async function runTool(call: ToolCall): Promise<{ entry: ToolTraceEntry; message
   try {
     const res = await fetch(`${BASE_URL}${url}`, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        // mirror what Retell sends, so the harness passes the same auth gate
+        ...(process.env.RETELL_WEBHOOK_SECRET
+          ? { "x-retell-secret": process.env.RETELL_WEBHOOK_SECRET }
+          : {}),
+      },
       body: JSON.stringify({ args }),
     });
     result = await res.json();

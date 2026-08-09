@@ -31,26 +31,45 @@ export function haveLLM(): boolean {
   return KEY.length > 0;
 }
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 export async function chat(
   messages: ChatMessage[],
   tools?: ToolDef[],
   opts: { temperature?: number } = {}
 ): Promise<ChatMessage> {
   if (!KEY) throw new Error("EVAL_LLM_API_KEY not set");
-  const res = await fetch(`${BASE}/chat/completions`, {
-    method: "POST",
-    headers: { authorization: `Bearer ${KEY}`, "content-type": "application/json" },
-    body: JSON.stringify({
-      model: MODEL,
-      messages,
-      tools,
-      tool_choice: tools ? "auto" : undefined,
-      temperature: opts.temperature ?? 0.4,
-    }),
+  const body = JSON.stringify({
+    model: MODEL,
+    messages,
+    tools,
+    tool_choice: tools ? "auto" : undefined,
+    temperature: opts.temperature ?? 0.4,
   });
-  if (!res.ok) throw new Error(`LLM ${res.status}: ${await res.text()}`);
-  const data = await res.json();
-  return data.choices[0].message as ChatMessage;
+
+  // Retry on 429 (rate limit) and 5xx, honouring the server's retry delay when
+  // present. Free-tier LLM keys throttle aggressively; this keeps the run alive
+  // instead of failing the whole suite on a transient limit.
+  const MAX_RETRIES = 6;
+  for (let attempt = 0; ; attempt++) {
+    const res = await fetch(`${BASE}/chat/completions`, {
+      method: "POST",
+      headers: { authorization: `Bearer ${KEY}`, "content-type": "application/json" },
+      body,
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data.choices[0].message as ChatMessage;
+    }
+    const text = await res.text();
+    if ((res.status === 429 || res.status >= 500) && attempt < MAX_RETRIES) {
+      const m = text.match(/"retryDelay":\s*"(\d+)s"/);
+      const waitMs = m ? (Number(m[1]) + 1) * 1000 : Math.min(2 ** attempt * 1000, 30000);
+      await sleep(waitMs);
+      continue;
+    }
+    throw new Error(`LLM ${res.status}: ${text}`);
+  }
 }
 
 // One-shot JSON scorer used by the LLM-judge. Returns parsed JSON or null.
