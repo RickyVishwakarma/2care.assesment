@@ -11,7 +11,7 @@ A voice agent that acts as the front desk for **Manipal Hospital, Old Airport Ro
 
 - **A voice agent (Retell)** that handles the full appointment lifecycle — booking, rescheduling, cancellation, and conflict resolution when a slot isn't available. It copes with vague requests ("my knee hurts"), mid-conversation changes of mind ("actually, the afternoon"), and recovers gracefully when a slot is taken.
 - **A real backend** (Next.js API + Postgres on Supabase) exposing five typed tools. Appointments are real rows; conflicts are checked against a real database; double-booking is prevented by a DB constraint, not hopeful code.
-- **Real clinic data** — 30 real doctors across 14 departments, scraped/sourced from Manipal's public directory. Provenance is documented in [`data/clinic.json`](data/clinic.json) (`_meta`): names, departments, designations, and fees are real; only per-doctor slot *times* are reconstructed (hospitals don't publish those) and the concrete slots are generated from them.
+- **Real clinic data** — 26 real doctors across 14 departments, scraped/sourced from Manipal's public directory. Provenance is documented in [`data/clinic.json`](data/clinic.json) (`_meta`): names, departments, designations, and fees are real; only per-doctor slot *times* are reconstructed (hospitals don't publish those) and the concrete slots are generated from them.
 - **An eval harness** — a re-runnable pipeline that drives simulated patients through the *real* agent tool-loop against the *real* backend and scores the outcome. `npm run eval`.
 - **2care-flavoured extras**: an **emergency safety guardrail** (won't book a chest-pain caller — escalates to 108), **symptom→department routing**, and **WhatsApp confirmations** (their actual channel).
 
