@@ -1,0 +1,84 @@
+{
+  "_note": "Retell custom-function definitions. In the Retell dashboard, add each as a Custom Function with the given name, description, URL (https://YOUR-DEPLOYMENT/api/tools/...), and JSON parameters below. speak_during_execution keeps latency invisible: the agent says a filler line while the tool runs.",
+
+  "tools": [
+    {
+      "name": "lookup_patient",
+      "url": "/api/tools/lookup-patient",
+      "description": "Look up a caller by phone number to greet returning patients and see their upcoming appointments. Call this once you have the caller's phone number.",
+      "speak_during_execution": false,
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "phone": { "type": "string", "description": "Caller's phone number in E.164, e.g. +919812345678" }
+        },
+        "required": ["phone"]
+      }
+    },
+    {
+      "name": "check_availability",
+      "url": "/api/tools/check-availability",
+      "description": "Find open appointment slots. Provide a department OR a doctor name OR a symptom (the tool routes symptoms to the right department). Optionally a date_hint (today, tomorrow, this week, a weekday) and type (new, followup, tele). Returns the soonest slots with slot_id, doctor, and a speakable time.",
+      "speak_during_execution": true,
+      "speak_during_execution_message": "Let me check what's open…",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "department": { "type": "string", "description": "e.g. Cardiology, Orthopaedics" },
+          "doctor": { "type": "string", "description": "Doctor's name if the caller asked for someone specific" },
+          "symptom": { "type": "string", "description": "What the caller said is wrong, e.g. 'knee pain' — used to route to a department" },
+          "date_hint": { "type": "string", "description": "today | tomorrow | this week | a weekday like 'Friday'" },
+          "type": { "type": "string", "enum": ["new", "followup", "tele"], "description": "Appointment type; tele = teleconsultation" }
+        },
+        "required": []
+      }
+    },
+    {
+      "name": "book_appointment",
+      "url": "/api/tools/book-appointment",
+      "description": "Book a specific slot for the caller. Use a slot_id returned by check_availability. Confirm the doctor, date, and time with the caller BEFORE calling this.",
+      "speak_during_execution": true,
+      "speak_during_execution_message": "Booking that now…",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "slot_id": { "type": "string", "description": "slot_id from check_availability" },
+          "phone": { "type": "string", "description": "Caller phone in E.164" },
+          "patient_name": { "type": "string", "description": "Caller's name (for new patients)" },
+          "type": { "type": "string", "enum": ["new", "followup", "tele"] },
+          "reason": { "type": "string", "description": "Short chief complaint if given" }
+        },
+        "required": ["slot_id", "phone"]
+      }
+    },
+    {
+      "name": "reschedule_appointment",
+      "url": "/api/tools/reschedule-appointment",
+      "description": "Move an existing appointment to a new slot. Get the appointment_id from lookup_patient and a new_slot_id from check_availability.",
+      "speak_during_execution": true,
+      "speak_during_execution_message": "Moving that for you…",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "appointment_id": { "type": "string" },
+          "new_slot_id": { "type": "string" }
+        },
+        "required": ["appointment_id", "new_slot_id"]
+      }
+    },
+    {
+      "name": "cancel_appointment",
+      "url": "/api/tools/cancel-appointment",
+      "description": "Cancel an existing appointment. Get the appointment_id from lookup_patient. Confirm with the caller before cancelling.",
+      "speak_during_execution": true,
+      "speak_during_execution_message": "Cancelling that…",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "appointment_id": { "type": "string" }
+        },
+        "required": ["appointment_id"]
+      }
+    }
+  ]
+}
