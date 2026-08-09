@@ -5,6 +5,7 @@
 // end-state, (4) scores deterministic + LLM-judged metrics. Results print as a
 // table and are written to eval/results/latest.json for the reviewer to inspect
 // and re-run independently.
+import "dotenv/config";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { agentRespond } from "./agent";

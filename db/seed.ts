@@ -5,6 +5,7 @@
 //
 // Idempotent: safe to re-run. Re-seeding refreshes doctors and regenerates the
 // forward slot window; existing appointments are preserved.
+import "dotenv/config";
 import { createClient } from "@supabase/supabase-js";
 import clinic from "../data/clinic.json";
 import { generateSlots } from "../lib/slots";
