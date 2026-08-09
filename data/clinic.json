@@ -1,0 +1,116 @@
+{
+  "_meta": {
+    "source": "Manipal Hospital, Old Airport Road, Bengaluru — public doctor directory",
+    "sourced_from": [
+      "https://www.manipalhospitals.com/oldairportroad/doctors-list/",
+      "https://www.hexahealth.com/bangalore/hospital/manipal-hospital-old-airport-road/doctors-list",
+      "https://www.clinicspots.com/hospital/manipal-hospital/doctors"
+    ],
+    "sourced_on": "2026-08-09",
+    "provenance": {
+      "real": "Doctor names, departments/specialties, designations, and consultation fees are real, sourced from the hospital's public directory and public aggregators.",
+      "synthesized": "OPD day/time windows are realistic reconstructions (Indian OPD conventions, Mon–Sat) because per-doctor slot times are NOT published. The concrete bookable slots are generated from these windows by db/seed.ts. This is stated openly in the README and ARCHITECTURE.",
+      "note": "Phone number is the hospital's real public helpline. No patient data is real; patients are created live during calls/eval."
+    }
+  },
+
+  "clinic": {
+    "name": "Manipal Hospital, Old Airport Road",
+    "city": "Bengaluru",
+    "address": "98, HAL Old Airport Rd, Kodihalli, Bengaluru, Karnataka 560017",
+    "phone": "+911800102555",
+    "timezone": "Asia/Kolkata",
+    "opd_note": "OPD runs Monday–Saturday. Sunday is emergency-only (no OPD booking)."
+  },
+
+  "appointment_types": [
+    { "code": "new",      "label": "New consultation",      "duration_min": 20 },
+    { "code": "followup", "label": "Follow-up visit",       "duration_min": 15 },
+    { "code": "tele",     "label": "Teleconsultation",      "duration_min": 15 }
+  ],
+
+  "departments": [
+    { "name": "Internal Medicine",        "synonyms": ["general medicine", "physician", "general physician", "fever", "checkup"] },
+    { "name": "Cardiology",               "synonyms": ["heart", "cardiac", "chest pain", "bp", "blood pressure", "palpitations"] },
+    { "name": "Neurology",                "synonyms": ["brain", "nerve", "headache", "migraine", "seizure", "stroke"] },
+    { "name": "Orthopaedics",             "synonyms": ["ortho", "bone", "joint", "knee", "back pain", "fracture", "spine"] },
+    { "name": "ENT",                      "synonyms": ["ear", "nose", "throat", "sinus", "hearing", "otolaryngology"] },
+    { "name": "Gastroenterology",         "synonyms": ["stomach", "gastric", "digestion", "liver", "acidity", "gastro"] },
+    { "name": "Obstetrics & Gynaecology", "synonyms": ["gynae", "gynaecology", "obgyn", "pregnancy", "women", "maternity"] },
+    { "name": "Nephrology",               "synonyms": ["kidney", "renal", "dialysis"] },
+    { "name": "Urology",                  "synonyms": ["urine", "urinary", "prostate", "bladder"] },
+    { "name": "Dentistry",                "synonyms": ["dental", "teeth", "tooth", "gum"] },
+    { "name": "Oncology",                 "synonyms": ["cancer", "tumor", "tumour", "chemo", "oncologist"] },
+    { "name": "Rheumatology",             "synonyms": ["arthritis", "joint pain", "autoimmune", "gout"] },
+    { "name": "Pediatrics",               "synonyms": ["child", "kids", "paediatrics", "baby", "children"] },
+    { "name": "Dermatology",              "synonyms": ["skin", "hair", "rash", "acne", "derma"] }
+  ],
+
+  "doctors": [
+    { "full_name": "Dr. R D Holla",           "department": "Internal Medicine",        "designation": "Senior Consultant Physician", "teleconsult": true,  "fee_inr": 800,
+      "opd": [{ "days": ["Mon","Wed","Fri"], "start": "09:30", "end": "13:00" }, { "days": ["Tue","Thu"], "start": "16:00", "end": "18:30" }] },
+    { "full_name": "Dr. Prem S Pais",          "department": "Internal Medicine",        "designation": "Senior Consultant Physician", "teleconsult": true,  "fee_inr": 800,
+      "opd": [{ "days": ["Mon","Tue","Thu"], "start": "10:00", "end": "13:30" }] },
+    { "full_name": "Dr. Mohan Y Badgandi",     "department": "Internal Medicine",        "designation": "Consultant Physician",        "teleconsult": true,  "fee_inr": 750,
+      "opd": [{ "days": ["Wed","Fri","Sat"], "start": "09:30", "end": "12:30" }] },
+
+    { "full_name": "Dr. S S Iyengar",          "department": "Cardiology",               "designation": "Senior Consultant Cardiologist", "teleconsult": false, "fee_inr": 1000,
+      "opd": [{ "days": ["Mon","Wed","Fri"], "start": "10:00", "end": "13:00" }] },
+    { "full_name": "Dr. K S S Bhat",           "department": "Cardiology",               "designation": "Senior Consultant Cardiologist", "teleconsult": false, "fee_inr": 1000,
+      "opd": [{ "days": ["Tue","Thu","Sat"], "start": "10:00", "end": "12:30" }] },
+    { "full_name": "Dr. P Padmakumar",         "department": "Cardiology",               "designation": "Consultant Cardiologist",        "teleconsult": true,  "fee_inr": 900,
+      "opd": [{ "days": ["Mon","Thu"], "start": "15:00", "end": "18:00" }] },
+    { "full_name": "Dr. Kavya Mallikarjun",    "department": "Cardiology",               "designation": "Consultant, Paediatric Cardiology", "teleconsult": true, "fee_inr": 850,
+      "opd": [{ "days": ["Tue","Fri"], "start": "10:00", "end": "13:00" }] },
+
+    { "full_name": "Dr. Ajit Kumar Roy",       "department": "Neurology",                "designation": "Senior Consultant Neurologist",  "teleconsult": true,  "fee_inr": 950,
+      "opd": [{ "days": ["Mon","Wed","Fri"], "start": "11:00", "end": "14:00" }] },
+
+    { "full_name": "Dr. K M K Varma",          "department": "Orthopaedics",             "designation": "Senior Consultant Orthopaedic Surgeon", "teleconsult": false, "fee_inr": 900,
+      "opd": [{ "days": ["Mon","Tue","Thu"], "start": "09:30", "end": "12:30" }] },
+    { "full_name": "Dr. Bharath K Kadadi",     "department": "Orthopaedics",             "designation": "Consultant Orthopaedic Surgeon", "teleconsult": false, "fee_inr": 850,
+      "opd": [{ "days": ["Wed","Fri","Sat"], "start": "10:00", "end": "13:00" }] },
+    { "full_name": "Dr. Lokesh A Veerappa",    "department": "Orthopaedics",             "designation": "Consultant Orthopaedic Surgeon", "teleconsult": true,  "fee_inr": 850,
+      "opd": [{ "days": ["Tue","Thu"], "start": "15:30", "end": "18:00" }] },
+
+    { "full_name": "Dr. E V Raman",            "department": "ENT",                      "designation": "Senior Consultant ENT Surgeon",  "teleconsult": true,  "fee_inr": 750,
+      "opd": [{ "days": ["Mon","Wed","Sat"], "start": "10:00", "end": "13:00" }] },
+
+    { "full_name": "Dr. K N K Shetty",         "department": "Gastroenterology",         "designation": "Senior Consultant Gastroenterologist", "teleconsult": true, "fee_inr": 950,
+      "opd": [{ "days": ["Tue","Thu","Fri"], "start": "10:00", "end": "13:00" }] },
+
+    { "full_name": "Dr. Philomena Vaz",        "department": "Obstetrics & Gynaecology", "designation": "Senior Consultant Obstetrician & Gynaecologist", "teleconsult": true, "fee_inr": 850,
+      "opd": [{ "days": ["Mon","Wed","Fri"], "start": "09:30", "end": "12:30" }] },
+    { "full_name": "Dr. Surjeet Kaur Sharma",  "department": "Obstetrics & Gynaecology", "designation": "Senior Consultant Obstetrician & Gynaecologist", "teleconsult": false, "fee_inr": 850,
+      "opd": [{ "days": ["Tue","Thu","Sat"], "start": "10:00", "end": "13:00" }] },
+    { "full_name": "Dr. Rekha T P",            "department": "Obstetrics & Gynaecology", "designation": "Consultant Gynaecologist",       "teleconsult": true,  "fee_inr": 700,
+      "opd": [{ "days": ["Mon","Thu"], "start": "15:00", "end": "18:00" }] },
+
+    { "full_name": "Dr. H Sudarshan Ballal",   "department": "Nephrology",               "designation": "Senior Consultant Nephrologist", "teleconsult": true,  "fee_inr": 1000,
+      "opd": [{ "days": ["Mon","Wed"], "start": "11:00", "end": "13:30" }] },
+
+    { "full_name": "Dr. Shivashankar R",       "department": "Urology",                  "designation": "Senior Consultant Urologist",    "teleconsult": false, "fee_inr": 900,
+      "opd": [{ "days": ["Tue","Fri"], "start": "10:00", "end": "13:00" }] },
+    { "full_name": "Dr. Somanna M",            "department": "Urology",                  "designation": "Consultant Urologist",           "teleconsult": true,  "fee_inr": 850,
+      "opd": [{ "days": ["Wed","Sat"], "start": "10:00", "end": "12:30" }] },
+
+    { "full_name": "Dr. Rita Mukherjee",       "department": "Dentistry",                "designation": "Senior Consultant Dental Surgeon", "teleconsult": false, "fee_inr": 600,
+      "opd": [{ "days": ["Mon","Tue","Wed","Thu","Fri"], "start": "09:30", "end": "12:30" }] },
+
+    { "full_name": "Dr. Hemanth N",            "department": "Oncology",                 "designation": "Consultant Surgical Oncologist", "teleconsult": true,  "fee_inr": 1000,
+      "opd": [{ "days": ["Mon","Thu"], "start": "10:00", "end": "13:00" }] },
+    { "full_name": "Dr. Sanjiv Sharma",        "department": "Oncology",                 "designation": "Senior Consultant Radiation Oncologist", "teleconsult": true, "fee_inr": 1000,
+      "opd": [{ "days": ["Tue","Fri"], "start": "11:00", "end": "13:30" }] },
+
+    { "full_name": "Dr. Yogesh Singh",         "department": "Rheumatology",             "designation": "Senior Consultant Rheumatologist", "teleconsult": true, "fee_inr": 850,
+      "opd": [{ "days": ["Mon","Wed","Fri"], "start": "15:00", "end": "17:30" }] },
+    { "full_name": "Dr. Yathish G C",          "department": "Rheumatology",             "designation": "Consultant Rheumatologist",      "teleconsult": true,  "fee_inr": 800,
+      "opd": [{ "days": ["Tue","Thu"], "start": "10:00", "end": "12:30" }] },
+
+    { "full_name": "Dr. Ravneet Joshi",        "department": "Pediatrics",               "designation": "Senior Consultant Paediatrician", "teleconsult": true, "fee_inr": 800,
+      "opd": [{ "days": ["Mon","Tue","Wed","Thu","Fri","Sat"], "start": "09:00", "end": "12:00" }] },
+
+    { "full_name": "Dr. Srikanth V",           "department": "Dermatology",              "designation": "Senior Consultant Dermatologist & Plastic Surgeon", "teleconsult": true, "fee_inr": 850,
+      "opd": [{ "days": ["Wed","Sat"], "start": "11:00", "end": "14:00" }] }
+  ]
+}
