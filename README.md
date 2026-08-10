@@ -65,7 +65,17 @@ npm run seed                # loads real clinic data + generates the slot grid
 npm run dev                 # backend live at http://localhost:3000
 ```
 
-### 2. Eval harness (re-runnable by you)
+### 2. Functional test suite (no LLM key needed)
+```bash
+# needs the backend running; deterministic — hits real endpoints + real data
+npm run smoke               # 17 checks: full lifecycle + every edge case
+```
+Covers booking, rescheduling, cancellation, conflict resolution, vague/symptom
+routing, emergency safety, returning-patient lookup, teleconsult, the auth gate,
+input validation, and error recovery — asserting on real DB state, then cleaning
+up after itself. This is the fastest way to confirm the machinery runs.
+
+### 3. Eval harness (re-runnable by you)
 ```bash
 # needs the backend running (CARELINE_BASE_URL) + an LLM key (EVAL_LLM_API_KEY)
 npm run eval                # runs all scenarios, prints a table
@@ -73,7 +83,7 @@ npm run eval book-happy     # run a single scenario by id
 # → results written to eval/results/latest.json
 ```
 
-### 3. Voice agent + live deploy
+### 4. Voice agent + live deploy
 Full walkthrough in **[docs/DEPLOY.md](docs/DEPLOY.md)** — deploy to Vercel, create the Retell agent from [`agent/`](agent), wire the tools + webhook, and the web-call button on the homepage goes live.
 
 ## Repo map

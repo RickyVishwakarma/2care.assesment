@@ -9,6 +9,7 @@
     "start": "next start",
     "seed": "tsx db/seed.ts",
     "scrape": "tsx data/scraper/scrape.ts",
+    "smoke": "tsx eval/smoke.ts",
     "eval": "tsx eval/harness.ts"
   },
   "dependencies": {
