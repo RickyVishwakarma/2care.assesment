@@ -1,18 +1,14 @@
 :root {
-  --bg: #0c0d10;
-  --panel: #121317;
-  --surface: #16181d;
-  --line: #23252c;
-  --line-soft: #1c1e24;
-  --text: #dcdee2;
-  --heading: #eef0f3;
-  --muted: #7c808a;
-  --accent: #7fb59a;          /* muted sage — used sparingly */
-  --accent-soft: rgba(127, 181, 154, 0.10);
-  --accent-line: rgba(127, 181, 154, 0.28);
-  --danger: #b98a8a;
-  --danger-soft: rgba(185, 138, 138, 0.10);
-  --danger-line: rgba(185, 138, 138, 0.30);
+  --bg: #0a0a0a;
+  --panel: #0e0e0e;
+  --surface: #151515;
+  --line: #2a2a2a;
+  --line-soft: #1b1b1b;
+  --text: #d4d4d4;
+  --heading: #fafafa;
+  --muted: #6f6f6f;
+  --btn: #ededed;         /* white primary on black */
+  --btn-text: #0a0a0a;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
@@ -23,7 +19,7 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
-a { color: var(--accent); text-decoration: none; }
+a { color: var(--heading); text-decoration: none; border-bottom: 1px solid var(--line); }
 
 .wrap { max-width: 640px; margin: 0 auto; padding: 96px 24px 80px; }
 
@@ -58,22 +54,23 @@ h1 {
   appearance: none;
   cursor: pointer;
   width: 100%;
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
-  color: #bcd8ca;
-  font-weight: 500;
+  background: var(--btn);
+  border: 1px solid var(--btn);
+  color: var(--btn-text);
+  font-weight: 600;
   font-size: 15px;
   padding: 15px;
   border-radius: 10px;
   transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
 }
-.call-btn:hover { background: rgba(127, 181, 154, 0.16); }
+.call-btn:hover { background: #ffffff; border-color: #ffffff; }
 .call-btn.live {
-  background: var(--danger-soft);
-  border-color: var(--danger-line);
-  color: #d8b8b8;
+  background: transparent;
+  border-color: var(--line);
+  color: var(--text);
 }
-.call-btn:disabled { opacity: 0.5; cursor: default; }
+.call-btn.live:hover { background: var(--surface); border-color: #3a3a3a; }
+.call-btn:disabled { opacity: 0.45; cursor: default; }
 
 .status {
   margin-top: 12px;
@@ -126,7 +123,7 @@ h1 {
   h1 { font-size: 23px; margin-top: 12px; }
   .sub { margin-bottom: 28px; font-size: 14.5px; }
   .panel { padding: 18px; border-radius: 12px; }
-  .call-btn { padding: 16px; }        /* comfortable tap target */
+  .call-btn { padding: 16px; }
   .grid { grid-template-columns: 1fr; }
   .hint { margin-top: 24px; }
 }

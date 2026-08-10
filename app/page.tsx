@@ -66,7 +66,7 @@ export default function Home() {
             ? "Connecting…"
             : live
             ? "End call"
-            : "📞 Call the receptionist"}
+            : "Call the receptionist"}
         </button>
         <div className="status">{status}</div>
 
