@@ -1,44 +1,65 @@
-# Loom script (≤ 3 minutes)
+# Loom Script — CareLine (≤ 3:00)
 
-The brief: a live demo of a call going through + a 60-second walkthrough of
-design decisions. Record against the **deployed** app, not localhost.
+A word-for-word script for the demo video. The brief asks for a live call against
+the deployed product plus a ~60s design walkthrough.
 
-## Before you hit record
-- Deployed app open on the homepage.
-- Supabase `appointments` table open in a second tab (to show the row appear).
-- `eval/results/latest.json` or the eval terminal output ready to flash.
-- Mic tested; quiet room.
+## Before recording — open these tabs, in order
+1. Live site: `https://2care-assesment.vercel.app`
+2. GitHub repo
+3. Supabase → Table Editor → `appointments` (for the proof shot)
+4. VS Code with: `ARCHITECTURE.md`, `lib/service.ts`, `agent/prompt.md`
 
-## Part 1 — Live call (~90s)
-1. **(10s)** "This is CareLine — a voice receptionist for Manipal Hospital, Old
-   Airport Road. Real doctors, real backend. Let me call it." Click **Call**.
-2. **(50s)** Do a booking that shows off reasoning + recovery. Suggested script:
-   - You: "Hi, my knee's been hurting, I'm not sure who to see." → agent routes
-     to Orthopaedics and offers a real doctor/slot. *(shows symptom routing)*
-   - You: "Actually, do you have something in the afternoon?" → agent adapts.
-     *(shows change-of-mind recovery)*
-   - You: "Yeah, book that. My number's +9198…" → agent confirms and books.
-3. **(15s)** Switch to Supabase: point at the new `appointments` row and the
-   freed/booked `doctor_slots`. "That's a real row — not hardcoded JSON."
-4. **(15s, optional)** Quick emergency line: "I have severe chest pain" → agent
-   refuses to book and points to 108. "Safety guardrail — it won't schedule an
-   emergency."
+Test your mic. Speak clearly. Pauses are fine — don't rush.
 
-## Part 2 — Design decisions (~60s)
-Talk over the ARCHITECTURE diagram:
-- **"Three separable pieces"** — agent, backend, eval — all hitting the same
-  real endpoints. So the eval tests production logic, not a mock.
-- **"Why Retell"** — web-call link = reviewer can call it with zero setup;
-  backend is platform-agnostic so Bolna would be a small swap.
-- **"Latency"** — lean prompt, speakable tool results, `speak_during_execution`
-  fillers, and I measure backend tool latency in the harness (say the number).
-- **"Eval"** — simulated patients (decisive, vague, mind-changer, emergency)
-  driven through the real tool loop; I score DB end-state + tool trace
-  deterministically, and add a softer LLM-judge for recovery/naturalness.
-- **"Known gap"** — the harness doesn't test ASR/TTS acoustics; that's what this
-  live call is for. *(Naming your own limitation reads as senior.)*
+---
+
+## [0:00–0:12] Intro — on the live site
+> "Hi, I'm Ricky. This is CareLine — a voice AI receptionist for Manipal Hospital,
+> Old Airport Road, built on Retell. It books, reschedules, and cancels real
+> appointments over a phone call. Let me show a live call, then how it's built."
+
+## [0:12–1:40] The live call (the money shot)
+> "I'll click 'Call the receptionist' and just talk to it like a phone call."
+
+- **CLICK** the button, allow mic.
+- **You:** "Hi, I need to see a cardiologist this week."
+- (it offers slots) **You:** "Let's do the earliest one."
+- (it asks name/number) **You:** "My name's Ricky, my number's 9-8-…"
+- (it confirms + books)
+
+> "So it understood a vague request, routed me to Cardiology, checked real
+> availability, and booked it — no human involved."
+
+## [1:40–1:58] Prove it's real — switch to Supabase
+> "This isn't a mock — here's that exact appointment in the live Postgres
+> database: my name, Dr. S S Iyengar, the time, booked from a voice call."
+
+## [1:58–2:48] Design walkthrough — switch to VS Code
+> "On the design. **[ARCHITECTURE.md]** Three separable pieces — the Retell agent,
+> a Next.js backend on Vercel, and an eval harness — all hitting the same real
+> endpoints."
+
+> "I chose Retell for the lowest-friction path to a live, callable agent.
+> **[service.ts]** The agent never touches the database — it calls five typed
+> tools, and booking a slot is a database guarantee, so two callers can't grab
+> the same time."
+
+> "**[prompt.md]** The prompt is deliberately lean — the doctor list lives in the
+> database, not the prompt, so it never goes stale. And there's a safety
+> guardrail: describe an emergency like chest pain and it refuses to book and
+> points you to 108."
+
+> "On latency — tool calls return in about 150 ms, and the agent speaks a filler
+> line while they run, so the caller never hears dead air."
+
+## [2:48–3:00] Close
+> "Everything's real data, it's deployed and independently callable, and there's a
+> re-runnable eval harness and a one-command functional test in the repo. Thanks."
+
+---
 
 ## Tips
-- Keep it under 3:00 — they said max 3 minutes; going over reads as not editing.
-- One clean take of the call beats three messy ones. If it fumbles, re-record.
-- Say the actual latency number out loud — it shows you measured, not guessed.
+- If the call misfires, end and restart — don't narrate the stumble. Do 2–3 takes.
+- Practice the call once before recording.
+- The walkthrough is where people overrun. If you're at 2:30 after the call, cut
+  it to just Retell + the emergency guardrail.
