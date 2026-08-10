@@ -25,6 +25,14 @@ A voice agent that acts as the front desk for **Manipal Hospital, Old Airport Ro
 | **Lean prompt, knowledge in tools** | The doctor list lives in the DB, not the prompt — so the prompt stays short (fast to process) and never goes stale. ([`agent/prompt.md`](agent/prompt.md)) |
 | **Harness hits the real endpoints** | What we test is what runs in production. The only gap is the audio layer — stated plainly below. |
 
+## Generic engine, per-clinic config
+
+The clinic is **data, not code**. The entire engine — tools, conflict-checking, slot generation, symptom routing, the emergency guardrail, the eval harness — reads from the database and knows nothing about Manipal specifically. Manipal lives in exactly two places: [`data/clinic.json`](data/clinic.json) (the real doctors, departments, and OPD hours) and a few branding strings (homepage title, the greeting, the emergency line).
+
+**To repoint it at another hospital:** scrape that clinic's directory into a new `clinic.json`, run `npm run seed`, change ~3 branding strings, redeploy. The engine is unchanged.
+
+This isn't over-engineering — it mirrors how a product like 2care actually runs: **one engine, deployed per hospital**, each with its own data and branding. The clinic is configuration; it's multi-tenant by construction (single-tenant *per deployment* — there's no self-serve "add a clinic" UI, which is the right scope here).
+
 ## Latency story
 
 Voice UX lives or dies on turn latency. What the design does about it:
