@@ -18,6 +18,7 @@
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "retell-client-js-sdk": "^2.0.5",
+    "retell-sdk": "^5.60.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

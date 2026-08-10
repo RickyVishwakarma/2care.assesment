@@ -1,16 +1,28 @@
 // Retell call-lifecycle webhook. Fires on call_started / call_ended /
 // call_analyzed. We persist the transcript + tool trace here — AFTER the call —
 // so nothing on this path ever slows down a live turn (ARCHITECTURE §5).
+//
+// Auth note: unlike the tool endpoints (which we gate with our own
+// x-retell-secret header), the webhook is called by Retell's servers, which
+// sign the payload with an X-Retell-Signature (HMAC of the raw body using the
+// API key). So we verify THAT here, via the official SDK — not our shared secret.
 import { db } from "@/lib/db";
-import { verifySecret } from "@/lib/http";
+import Retell from "retell-sdk";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  if (!verifySecret(req)) return NextResponse.json({ ok: false }, { status: 401 });
+  const raw = await req.text();
+  const signature = req.headers.get("x-retell-signature") ?? "";
+  const apiKey = process.env.RETELL_API_KEY;
+
+  if (apiKey) {
+    const valid = Retell.verify(raw, apiKey, signature);
+    if (!valid) return NextResponse.json({ ok: false }, { status: 401 });
+  }
 
   let body: any = {};
   try {
-    body = await req.json();
+    body = JSON.parse(raw);
   } catch {
     return NextResponse.json({ ok: false }, { status: 400 });
   }
