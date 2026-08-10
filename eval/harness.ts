@@ -84,8 +84,9 @@ function pct(n: number) {
 }
 
 async function main() {
-  const only = process.argv[2]; // optional scenario id filter
-  const scenarios = only ? SCENARIOS.filter((s) => s.id === only) : SCENARIOS;
+  const only = process.argv[2]; // optional scenario id filter (comma-separated)
+  const ids = only ? new Set(only.split(",").map((s) => s.trim())) : null;
+  const scenarios = ids ? SCENARIOS.filter((s) => ids.has(s.id)) : SCENARIOS;
 
   if (!haveLLM()) {
     console.error(
